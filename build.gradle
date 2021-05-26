@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.5.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "org.openapi.generator" version "5.1.1"
+	id 'application'
 }
 
 group = 'com.betterBanking'
@@ -22,11 +24,41 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	
+	implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.7.0'
+	implementation 'javax.validation:validation-api'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
+	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	// https://mvnrepository.com/artifact/io.rest-assured/spring-mock-mvc
-	testImplementation group: 'io.rest-assured', name: 'spring-mock-mvc', version: '4.3.3'
+
+	testImplementation 'io.rest-assured:spring-mock-mvc:4.3.3'
+	
+	implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+	testImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2'		// MockWebServer
 }
 
 test {
 	useJUnitPlatform()
+}
+
+openApiGenerate {
+	generatorName = "spring"
+	generateModelDocumentation = false
+	generateApiDocumentation = false
+	inputSpec = "$rootDir/banking/account-info-openapi.yaml".toString()
+	//inputSpec = "$rootDir/banking/openapi.yaml".toString()
+	outputDir = "$buildDir/generated".toString()
+	invokerPackage = "com.acme.banking.invoker"
+	modelPackage = "com.acme.banking.model"
+	apiPackage = "com.acme.banking.api"
+	configOptions = [
+			dateLibrary: "java8",
+			basePackage: "com.acme.banking",
+			interfaceOnly: "true",
+			useBeanValidation: "false"
+	]
 }
