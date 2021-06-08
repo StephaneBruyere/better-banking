@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="headerfiles">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+<title>PORTAL</title>
+<link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+	
+			<ul class="navbar-nav ml-auto">			
+				<li class="nav-item dropdown" >
+					<a class="nav-link dropdown-toggle" th:href="@{/#}" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span th:text="${name} ?: 'UNLOGGED'"></span></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" id="logout" th:href="@{/logout}" >Logout</a>
+					</div>
+				</li>	
+			</ul>
+	</nav>	
+
+<div class="container">
+		<div class="jumbotron text-center">
+			<h1>Transaction Portal</h1>
+		</div>
+		<div>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+				erat lectus, vehicula feugiat ultricies at, tempus sed ante. Cras
+				arcu erat, lobortis vitae quam et, mollis pharetra odio. Nullam sit
+				amet congue ipsum. Nunc dapibus odio ut ligula venenatis porta non
+				id dui. Duis nec tempor tellus. Suspendisse id blandit ligula, sit
+				amet varius mauris. Nulla eu eros pharetra, tristique dui quis,
+				vehicula libero. Aenean a neque sit amet tellus porttitor rutrum nec
+				at leo.</p>
+
+			<div class="well">
+				<b>Get transaction : </b><a th:href="@{/transactions/123456}">Transaction 123456</a>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{https://code.jquery.com/jquery-3.5.1.slim.min.js}"></script>
+	<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+</body>
+</html>

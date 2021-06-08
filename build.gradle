@@ -25,6 +25,8 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	
+  	implementation 'org.springframework.boot:spring-boot-starter-security'
+  
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	
 	implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.7.0'
@@ -33,12 +35,23 @@ dependencies {
 	
 	implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
 	
+	implementation 'org.keycloak:keycloak-spring-boot-starter:13.0.1'
+	//implementation group: 'org.keycloak.bom', name: 'keycloak-adapter-bom', version: '13.0.1', ext: 'pom'
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	
+  	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+		
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	testImplementation 'io.rest-assured:spring-mock-mvc:4.3.3'
 	
+	implementation group: 'com.konghq', name: 'unirest-java', version: '4.0.0-RC1'
+	
+	
 	implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
 	testImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2'		// MockWebServer
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {
