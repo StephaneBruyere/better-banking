@@ -3,6 +3,7 @@ package io.betterbanking.domain.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import io.betterbanking.apiclient.TransactionApiClient;
@@ -23,6 +24,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
 	@Override
+	@Cacheable(cacheNames = "transactions")
 	@CircuitBreaker(name = "transactionService", fallbackMethod = "foundNone")
 	public List<Transaction> findAllByAccountNumber(final int accountNumber) {
 		var transactions = transactionApiClient.findAllByAccountNumber(accountNumber);

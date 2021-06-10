@@ -62,6 +62,9 @@ public class RESTTransactionsAPIClient implements TransactionApiClient {
 		if (res == null || res.getData() == null) {
 			return Collections.emptyList();
 		}
+		
+		log.info("getting data from the remote service");
+		
 		return res.getData()
 					.getTransaction()
 					.stream()

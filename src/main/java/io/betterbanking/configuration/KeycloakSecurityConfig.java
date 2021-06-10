@@ -63,7 +63,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
          .logoutSuccessUrl("/");
     	 
         http.authorizeRequests()
-        	.antMatchers("/transactions/**").hasRole("betterbanking-user")
+        	.antMatchers("/transactions/**").hasRole("betterbanking-user") //.authenticated()//
         	.anyRequest()
         	.permitAll();
     }

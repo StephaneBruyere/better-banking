@@ -3,8 +3,10 @@ package io.betterbanking.domain.controller;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.net.URI;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+
 import io.betterbanking.domain.model.Transaction;
 import io.betterbanking.domain.service.TransactionService;
 import kong.unirest.HttpResponse;
@@ -23,9 +27,6 @@ import kong.unirest.Unirest;
 @SpringBootTest
 @AutoConfigureMockMvc
 class TransactionControllerIntegrationTest {
-
-	private static final String CLIENT_ID = "better-banking.io";
-	private static final String CLIENT_SECRET = "DHmn6yjQRWcCNA9P";
 
 	private final String uri = "http://localhost:8089/auth/realms/SpringBootKeycloak/protocol/openid-connect/token";
 
@@ -47,18 +48,28 @@ class TransactionControllerIntegrationTest {
 
 		mockMvc.perform(get("/transactions/123456").header("Authorization", "Bearer " + accessToken)
 				.accept("application/json;charset=UTF-8")).andExpect(status().isOk())
-				// .andExpect(content().contentType("application/json;charset=UTF-8"))
 				.andExpect(status().is2xxSuccessful());
 	}
 
 	private String obtainAccessToken(String username, String password) throws Exception {
+		String client_id ="betterbanking-app";
+		String grant_type = "password";
+		String scope = "betterbanking-app";
+//	    ResultActions result = mockMvc
+//	                		.perform(post(new URI(uri))
+//	                		.header("Content-Type", "application/x-www-form-urlencoded")
+//	                		.content("grant_type="+grant_type+"&client_id="+client_id+"&username="+username+"&password="+password+"&scope="+scope)
+//	                		.accept("application/json;charset=UTF-8"))
+//	                		.andExpect(status().isOk());
+//	    String resultString = result.andReturn().getResponse().getContentAsString();
+	        
 		HttpResponse<JsonNode> response = Unirest.post(uri)
 				.header("Content-Type", "application/x-www-form-urlencoded")
-				.field("client_id", "betterbanking-app")
-				.field("username", "bob")
-				.field("password", "cnam")
-				.field("grant_type", "password")
-				.field("scope", "betterbanking-app")
+				.field("grant_type", grant_type)
+				.field("client_id", client_id)
+				.field("username", username)
+				.field("password", password)
+				.field("scope", scope)
 				.asJson();
 		String resultString = (String) response.getBody().toString();
 		System.err.println(resultString);
